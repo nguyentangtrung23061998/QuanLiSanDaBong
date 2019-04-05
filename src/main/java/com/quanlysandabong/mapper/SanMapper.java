@@ -21,8 +21,8 @@ public class SanMapper implements RowMapper<SanModel> {
 //			news.setCategoryId(resultSet.getLong("categoryid"));
 //			news.setThumbnail(resultSet.getString("thumbnail"));
 //			news.setShortDescription(resultSet.getString("shortdescription"));
-			san.setCreatedDate(resultSet.getTimestamp("createddate"));
-			san.setCreatedBy(resultSet.getString("createdby"));
+			//san.setCreatedDate(resultSet.getTimestamp("createddate"));
+			//san.setCreatedBy(resultSet.getString("createdby"));
 //			if(resultSet.getTimestamp("modifieddate") != null) {
 //				san.setModifiedDate(resultSet.getTimestamp("modifieddate"));
 //			}if(resultSet.getString("modifiedby") != null) {
