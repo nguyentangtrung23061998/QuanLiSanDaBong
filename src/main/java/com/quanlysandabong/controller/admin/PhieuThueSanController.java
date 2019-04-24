@@ -21,7 +21,16 @@ public class PhieuThueSanController extends HttpServlet{
 
 	@Inject IPhieuThueService ptSV;
 	private static final long serialVersionUID = -295861685542460270L;
-
+	protected void setCors(HttpServletRequest request, HttpServletResponse response){
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
+			// CORS "pre-flight" request
+			response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE,OPTIONS");
+			// response.addHeader("Access-Control-Allow-Headers", "Authorization");
+			response.addHeader("Access-Control-Allow-Headers","Origin,Observe, X-Requested-With, Content-Type, Accept");
+			response.addHeader("Access-Control-Max-Age", "1");
+		}
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PhieuThueModel ptModel = FormUtil.toModel(PhieuThueModel.class,request);
@@ -29,6 +38,7 @@ public class PhieuThueSanController extends HttpServlet{
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		ptModel.setListResult(ptSV.findAll());
+		setCors(request,response);
 		mapper.writeValue(response.getOutputStream(), ptModel);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -1,4 +1,4 @@
-package com.quanlysandabong.model;
+	package com.quanlysandabong.model;
 
 public class PhieuThueModel extends AbstractModel<PhieuThueModel>{
 	private Long maPT;

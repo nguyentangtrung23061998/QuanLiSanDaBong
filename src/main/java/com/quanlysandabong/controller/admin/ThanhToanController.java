@@ -33,7 +33,16 @@ public class ThanhToanController extends HttpServlet {
 	private static final long serialVersionUID = -7212567614801461066L;
 	@Inject
 	IThanhTienService ttService;
-	
+	protected void setCors(HttpServletRequest request, HttpServletResponse response){
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
+			// CORS "pre-flight" request
+			response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE,OPTIONS");
+			// response.addHeader("Access-Control-Allow-Headers", "Authorization");
+			response.addHeader("Access-Control-Allow-Headers","Origin,Observe, X-Requested-With, Content-Type, Accept");
+			response.addHeader("Access-Control-Max-Age", "1");
+		}
+	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -45,14 +54,7 @@ public class ThanhToanController extends HttpServlet {
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
 			ttModel.setListResult(ttService.findAll());
-			response.addHeader("Access-Control-Allow-Origin", "*");
-			if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
-				// CORS "pre-flight" request
-				response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE,OPTIONS");
-				// response.addHeader("Access-Control-Allow-Headers", "Authorization");
-				response.addHeader("Access-Control-Allow-Headers","Origin,Observe, X-Requested-With, Content-Type, Accept");
-				response.addHeader("Access-Control-Max-Age", "1");
-			}
+			setCors(request,response);
 			mapper.writeValue(response.getOutputStream(), ttModel);
 		
 		
@@ -60,13 +62,13 @@ public class ThanhToanController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		ThanhToanModel ttModel = HttpUtil.of(request.getReader()).toModel(ThanhToanModel.class);
-//		ObjectMapper mapper = new ObjectMapper();
-//		request.setCharacterEncoding("UTF-8");
-//		response.setContentType("application/json");
-//		ttModel = ttService.save(ttModel);
-//		mapper.writeValue(response.getOutputStream(), ttModel);
-//		setAccessControlHeaders(response);
+		ThanhToanModel ttModel = HttpUtil.of(request.getReader()).toModel(ThanhToanModel.class);
+		ObjectMapper mapper = new ObjectMapper();
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		ttModel = ttService.save(ttModel);
+		mapper.writeValue(response.getOutputStream(), ttModel);
+		
 	}
 
 	
